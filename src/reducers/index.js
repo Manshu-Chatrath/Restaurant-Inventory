@@ -1,9 +1,89 @@
+
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
 const signup=(state=[],action)=>{
+    if(action.type==='Signup')
+    {
+        return action.payload;
+    }
     return state;
 }
+const Login=(state=[],action)=>{
+    if(action.type==='login')
+    {      
+        return action.payload
+    }
+    if(action.type==='Logout')
+    {
+        return action.payload;
+    }
+    return state;
+}
+const categories=(state=[],action)=>{
+    if(action.type==='all')
+    {
+        return action.payload
+    }
+    if(action.type==='SEARCHING')
+    {
+        return action.payload.sort();
+    }
+
+    return state;
+}
+const menu=(state=[],action)=>{
+    if(action.type==='MENU')
+    {
+        return action.payload;
+    }
+    if(action.type==='SEARCHING')
+    {
+        return action.payload;
+    }
+   
+    return state;
+}
+const view=(state=[],action)=>{
+    if(action.type==='VIEW')
+    {
+        return action.payload;
+    }
+    if(action.type==='EDIT_EXTRA')
+    {
+        return action.payload
+    }
+    return state;
+}
+const allcategories=(state=[],action)=>{
+    if(action.type==='ALL_CAT')
+    {
+        return action.payload
+    }
+    return state;
+}
+const extracat=(state=[],action)=>{
+    if(action.type==='EXTRACAT')
+    {
+        return action.payload
+    }
+    return state;
+}
+const allextras=(state=[],action)=>{
+    if(action.type==='FETCHEXTRAS')
+    {
+        return action.payload
+    }
+    return state;
+}
+
 export default combineReducers({
 SignUp: signup,
+login: Login,
+categories: categories,
+menu:menu,
+allcategories: allcategories,
+view:view,
+extracat: extracat,
+allextras: allextras,
 form: formReducer
 })

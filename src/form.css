@@ -15,7 +15,10 @@
     width: 100%;
     cursor: pointer;
 }
-
+.nothing
+{
+    text-align: center;
+}
 .rowdsd
 {
     display: flex;

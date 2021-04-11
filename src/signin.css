@@ -1,14 +1,17 @@
-body
+
+.window
 {
     background: url('https://www.publicdomainpictures.net/pictures/250000/velka/holz-hintergrund.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    width: 100%;
+    padding-top: 10%;
 }
 #container
 {
     background-color: aliceblue;
-    margin-top: 10%;
+    
 }
 
 #row1

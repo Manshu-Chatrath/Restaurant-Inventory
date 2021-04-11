@@ -1,67 +1,113 @@
 import React from 'react';
 import '../form.css';
-import Nav from '../Components/nav'
+import '../main.css';
+import Nav from '../Components/nav';
+import {connect} from 'react-redux';
+import {Field,reduxForm} from 'redux-form';
+import {feeddishes,viewone,edit,allcategories} from '../actions/index';
+
 class Form extends React.Component
 {
+componentDidMount()
+{
+    this.props.allcategories();
+if(this.props.match.params.id){
+    this.props.viewone(this.props.match.params.id);
+}
+}   
+categories=()=>{
+   return this.props.categories.map(category=>{
+        return(<option key={category.id} id={category.id}>{category.title}</option>)
+    })
+}
+inputs=(props)=>{
+    return(<input required maxLength={props.maxLength} {...props.input} placeholder={props.placeholder}  className={props.className} type={props.type} name={props.name}  />)
+}
+textarea=(props)=>{
+    return(<textarea required {...props.input} placeholder={props.placeholder} className={props.className} type={props.type} name={props.name} rows="3"/>)
+}
+onsubmit=(values)=>{
+    if(this.props.match.params.id)
+    {
+        return this.props.edit(this.props.match.params.id,values)
+    }
+return this.props.feeddishes(values)
+}
+allinputs=()=>{
+    return(<>
+        <div className="form-row">
+        <label className="ml-2">Dish Name:</label>
+        <div className="col-12">
+          <Field maxLength="24" placeholder="Enter name of dish" className="form-control" type="text" name="title" component={this.inputs} />
+        </div>
+    </div>
+    <div className="mt-2 form-row">
+        <label className="ml-2">Price:</label>
+        <div className="col-12">
+        <Field placeholder="Enter price of the dish" className="form-control" type="number" name="price" component={this.inputs} />
+        </div>
+    </div>
+    <div className="mt-2 form-row">
+        <label className="ml-2">Image:</label>
+        <div className="col-12">
+        <Field maxLength="480"  placeholder="Enter the url of the image" className="form-control" type="url" name="url" component={this.inputs} />
+        </div>
+    </div>
+    <div className="mt-2 form-row">
+        <label className="ml-2">Recepie:</label>
+        <div className="col-12">
+        <Field maxLength="480" placeholder="Enter recepie" className="form-control" type="text" row="3" name="recepie" component={this.textarea} />
+        </div>
+    </div>
+    <div className="mt-2 form-row">
+        <label className="ml-2">Enter category</label>
+        <div className="col-12">
+            <Field  maxLength="24" name="category" className="form-control form-control-sm" component="select">
+                <option value="">Select One</option>
+            {this.categories()}
+              </Field>
+        </div>
+    </div>
+    </>
+    )
+}
     render(){
-
-
         return(
         <>
         <Nav />
-            <div id="container" class="mt-5 container col-lg-4 col-md-5 col-sm-6 col-9 pt-3 pb-2">
-            <div class="rowdsd">
-            <div class="">
-            <h4 class="heading-inventory">Enter Dish</h4>
+            <div id="container" className="mt-5 container col-lg-4 col-md-5 col-sm-6 col-9 pt-3 pb-2">
+           {this.props.match.params.id ?  <div className="row-12">
+            <div className="">
+            <h4 className="heading-inventory">Edit Dish</h4>
             </div>
-            <div class="extra">
-                <button class="">Add Extras</button>
+            </div> :     
+            <div className="row-12">
+            <h4 className="heading-inventory">Add new dish</h4>
             </div>
-            </div>
-            <form action="" class="form">
-                <div class="form-row">
-                    <label class="ml-2">Dish Name:</label>
-                    <div class="col-12">
-                        <input type="text" class="form-control" placeholder="Dish name" />
-                    </div>
-                </div>
-                <div class="mt-2 form-row">
-                    <label class="ml-2">Price:</label>
-                    <div class="col-12">
-                        <input type="text" class="form-control" placeholder="Price" />
-                    </div>
-                </div>
-                <div class="mt-2 form-row">
-                    <label class="ml-2">Image:</label>
-                    <div class="col-12">
-                        <input type="text" class="form-control" placeholder="url" />
-                    </div>
-                </div>
-                <div class="mt-2 form-row">
-                    <label class="ml-2">Recepie:</label>
-                    <div class="col-12">
-                        <textarea class="form-control" placeholder="Enter recepie" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="mt-2 form-row">
-                    <label class="ml-2">Enter category</label>
-                    <div class="col-12">
-                        <select class="form-control form-control-sm">
-                        <option value="">Chicken</option>
-                        <option value="">Beef</option>
-                        <option value="">Porc</option>
-                        <option value="">Veg</option>
-                        <option value="">Drinks</option>
-                        <option value="">Special</option>
-                          </select>
-                    </div>
-                </div>
-                <button id="register" class="bg-success mt-2 mb-2">Register</button>
-            </form>
-     
+           }
+         
+         {this.props.match.params.id ? <form onSubmit={this.props.handleSubmit(this.onsubmit)} className="form">
+            {this.allinputs()}
+          <button id="register" className="bg-success mt-2 mb-2">Submit</button>
+            </form> : <form onSubmit={this.props.handleSubmit(this.onsubmit)} className="form">
+                {this.allinputs()}
+                <button id="register" className="bg-success mt-2 mb-2">Submit</button>
+            </form> }   
             </div>
         </>
         )
 }
 }
-export default Form;
+const mapStateToProps=(state,ownprops)=>{
+    console.log("So own props are ");
+    console.log(state.view);
+    if(ownprops.match.params.id)
+    {   console.log("boom")
+         if(state.view.length>0)
+        {
+            return {categories: state.allcategories,view: state.view,initialValues: {title: state.view[0].title,price: state.view[0].price,url: state.view[0].url,recepie: state.view[0].recepie,category: state.view[0].Category} }
+        }   
+    }
+    return {categories: state.allcategories}
+}
+export default connect(mapStateToProps,{feeddishes,viewone,edit,allcategories})(reduxForm({form: 'supervisorCreate',enableReinitialize: true})(Form));
