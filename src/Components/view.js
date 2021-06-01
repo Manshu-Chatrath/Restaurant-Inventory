@@ -28,10 +28,10 @@ class View extends React.Component
         {
         return this.props.categories.map(category=>{
             return(
-            <>
-            <div key={category.id} className="title-extra"><h4>{category.category}</h4></div>
+            <div key={category.category}>
+            <div className="title-extra"><h4>{category.category}</h4></div>
             {this.detail(category.category,category.dishId)}
-           </>
+           </div>
             )
         })
     }
@@ -41,22 +41,21 @@ class View extends React.Component
     }
     }
     detail=(title,id)=>{
-        console.log(title);
+        
         return this.props.extras.map(item=>{
-            console.log(item.title)
-            if(title===item.category && id===item.dishId)
-                {   
+        if(title===item.category)
+                {   console.log("here aha")
                     return(<div key={item.id} className="extra-item mb-3 pt-3">
-                    <div key={item.id} className="ml-5 item-name"><span>{item.title}</span><span className="price-extra">Price: {item.price}$</span></div>
-                    <div key={item.id} className="mt-2 btns mr-3">
-                     <Link to={`/edit-category/${item.id}`}><button className="btns mr-2 pl-3 pr-3">Edit</button></Link><button onClick={()=>{this.props.deleteextra(item.id)}} className="btns">Remove</button>
+                    <div className="ml-5 item-name"><span>{item.title}</span><span  className="price-extra">Price: {item.price.toFixed(2)}$</span></div>
+                    <div  className="mt-2 btns mr-3">
+                     <Link to={`/edit-category/${item.id}`}><button  className="btns mr-2 pl-3 pr-3">Edit</button></Link><button  onClick={()=>{this.props.deleteextra(item.id)}} className="btns">Remove</button>
                     </div>
                 </div> )
                 }
         })
     }
     popup=()=>{
-            return(<div className="hide extra2">
+            return(<div  className="hide extra2">
             <div className="extra-tab">
                 <div className="image2">
                     <img src={this.props.view[0].url} alt="" />
@@ -82,14 +81,14 @@ class View extends React.Component
             this.props.view.map(item=>{
                 return(
                     <div key={item.id} className="main1 pb-2 pl-2 pr-2">
-            <div className="heade mt-3">
+            <div  className="heade mt-3">
                 <h1>{item.title}</h1>
             </div>
-            <div className="image mt-3">
+            <div  className="image mt-3">
                 <img className="image1" src={item.url} />
             </div>
-            <div className="price">Price: {item.price}$</div>
-            <div className="description ml-4">
+            <div  className="price">Price: {item.price}$</div>
+            <div  className="description ml-4">
                   <p>{item.recepie}</p>
             </div>
             <Link className="link" to={`/add-extra/${item.id}`}><button id="register"  className="e bg-success mt-2 mb-2">Add Extras</button></Link>
@@ -101,7 +100,7 @@ class View extends React.Component
         )
     }
     render()
-    { console.log(this.props.view);
+    { 
         return(<>
             <Nav />
             {this.view()}

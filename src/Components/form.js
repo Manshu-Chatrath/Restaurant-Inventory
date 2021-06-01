@@ -99,10 +99,9 @@ allinputs=()=>{
 }
 }
 const mapStateToProps=(state,ownprops)=>{
-    console.log("So own props are ");
-    console.log(state.view);
+  
     if(ownprops.match.params.id)
-    {   console.log("boom")
+    {   
          if(state.view.length>0)
         {
             return {categories: state.allcategories,view: state.view,initialValues: {title: state.view[0].title,price: state.view[0].price,url: state.view[0].url,recepie: state.view[0].recepie,category: state.view[0].Category} }

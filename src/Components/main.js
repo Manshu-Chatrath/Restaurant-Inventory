@@ -10,7 +10,7 @@ class Menu extends React.Component
         id: 0
     }
     componentDidMount()
-    {   console.log("here we are ");
+    {   
         this.props.fetchmenu();
         this.props.fetchallcat();  
     }
@@ -39,7 +39,7 @@ class Menu extends React.Component
                 return(
                     <div key={item.id} className="article">
                     <i className="fa fa-times cross" onClick={(e)=>{this.open(item.id)}}></i>
-                    <div className="title"><h4>{item.title}</h4></div>
+                    <div  className="title"><h4>{item.title}</h4></div>
                     <div className="picture"><img src={item.url} alt="" className="pic" />
                     </div>
                     <div className="buttons mt-2">
@@ -51,7 +51,7 @@ class Menu extends React.Component
                     <h1>Delete Dish?</h1>
                     <p>Do you want to delete this dish?</p>
                     <div className="btnns">
-                        <button className="delete" onClick={(e)=>{console.log("So id is "+this.state.id);this.delete(this.state.id)}}>Delete</button><button className="delete">Cancel</button>
+                        <button  className="delete" onClick={(e)=>{this.delete(this.state.id)}}>Delete</button><button className="delete">Cancel</button>
                     </div>
                    </div>
                </div>
@@ -63,7 +63,7 @@ class Menu extends React.Component
     }
     nav=()=>{
         return this.props.categories.map(category=>{
-            return (<a key={category.id} href={`#${category.Category}`}>{category.Category}</a>)
+            return (<a key={category.Category} href={`#${category.Category}`}>{category.Category}</a>)
         })
     }
     main=()=>{
@@ -73,9 +73,9 @@ class Menu extends React.Component
         }
         return this.props.categories.map(category=>{
             return (
-                <div key={category.id} className="items mt-4">
-                    <div key={category.id} id={category.Category} className="heading"><h2 className="heading2">{category.Category}</h2></div><hr />
-                    <div className="main">
+                <div key={category.Category} className="items mt-4">
+                    <div className="heading" id={category.Category}><h2 className="heading2">{category.Category}</h2></div><hr />
+                    <div  className="main">
                         {this.menus(category.Category)}
                     </div>
                     <hr />

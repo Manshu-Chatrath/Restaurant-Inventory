@@ -3,7 +3,7 @@ import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
 const signup=(state=[],action)=>{
     if(action.type==='Signup')
-    {
+    {   console.log(action.payload);
         return action.payload;
     }
     return state;
@@ -14,7 +14,7 @@ const Login=(state=[],action)=>{
         return action.payload
     }
     if(action.type==='Logout')
-    {
+    {    window.location.reload();  
         return action.payload;
     }
     return state;

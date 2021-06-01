@@ -13,6 +13,7 @@ function inputs(props)
 function onsubmit(formValues)
 {
     props.LogIn(formValues);
+    
 }
 function invalid(){
     return(
@@ -43,15 +44,15 @@ return(<>
             <Field name="email" type="email" className="form-control" placeholder="Enter email" component={inputs} />
         </div>
     </div>
-    <div class="mt-2 form-row">
-        <div class="col-12">
+    <div className="mt-2 form-row">
+        <div className="col-12">
             <Field name="password" type="password" className="form-control" placeholder="Enter password"  component={inputs}/>
         </div>
     </div>
     <button id="login" className="bg-danger mt-2 mb-2">LogIn</button>
 </form>
 <div id="links" className="row pb-4">
-<div id="columns" class="col-12"><Link to={'/signup'}>New Supervisor?</Link> <Link to={`/signup`}>SignUp</Link>   </div>
+<div id="columns" className="col-12"><Link to={'/signup'}>New Supervisor?</Link> <Link to={`/signup`}>SignUp</Link>   </div>
 </div>
 </div>
 </div>
