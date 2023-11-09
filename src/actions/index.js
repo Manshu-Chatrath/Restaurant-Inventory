@@ -30,14 +30,14 @@ export const LogIn =
       if (response.data.credentials) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.id);
+        history.push("/main");
+        window.location.reload();
       }
       dispatch({
         type: "login",
         payload: response.data,
         token: response.data.token,
       });
-      history.push("/main");
-      window.location.reload();
     }
   };
 export const LogOut = () => async (dispatch) => {
